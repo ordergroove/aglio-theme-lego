@@ -232,7 +232,7 @@ mixin ContentTriple()
                                                   .dl-row__content
                                                     dt
                                                       .parameter-name= property.name
-                                                      if [property].required
+                                                      if property.required
                                                         .parameter-meta= property.type  + ' (required)'
                                                       else
                                                         .parameter-meta= property.type + ' (optional)'
@@ -249,7 +249,7 @@ mixin ContentTriple()
                                                             .dl-row__content
                                                               dt
                                                                 .parameter-name= property_sub2.name
-                                                                if [property_sub2].required
+                                                                if property_sub2.required
                                                                   .parameter-meta= property_sub2.type  + ' (required)'
                                                                 else
                                                                   .parameter-meta= property_sub2.type + ' (optional)'
@@ -266,7 +266,7 @@ mixin ContentTriple()
                                                                   .dl-row__content
                                                                     dt
                                                                       .parameter-name= property_sub3.name
-                                                                      if [property_sub3].required
+                                                                      if property_sub3.required
                                                                         .parameter-meta= property_sub3.type  + ' (required)'
                                                                       else
                                                                         .parameter-meta= property_sub3.type + ' (optional)'
