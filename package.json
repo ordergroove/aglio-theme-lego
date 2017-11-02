@@ -1,5 +1,5 @@
 {
-  "name": "@ordergroove/aglio-theme-lego",
+  "name": "aglio-theme-lego",
   "version": "1.0.1",
   "description": "Aglio theme forked froma attributable and maplet",
   "main": "lib/main.js",
