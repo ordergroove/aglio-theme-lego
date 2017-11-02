@@ -76,106 +76,124 @@ mixin Parameters(params)
                 != self.markdown(param.description)
 
 mixin RequestResponse(title, request, collapse)
+  .title
+    strong
+      = title
+      if request.name
+        | &nbsp;&nbsp;
+        code= request.name
+    if collapse && request.hasContent
+      .collapse-button
+        span.close Hide
+          span.open Show
+  +RequestResponseBody(request, collapse)
+
+mixin RequestResponseBody(http, collapse, showBlank)
+  if http.hasContent || showBlank
+    div(class=collapse ? 'collapse-content' : ''): .inner
+      if http.description
+        .description!= self.markdown(http.description)
+
+      if Object.keys(http.headers).length
+        h5 Headers
+        pre: code
+          each item, index in http.headers
+            != self.highlight(item.name + ': ' + item.value, 'http')
+            if index < http.headers.length - 1
+              br
+        div(style="height: 1px;")
+
+    if http.body
+        h5 Body
+        pre: code
+          != self.highlight(http.body, null, ['json', 'yaml', 'xml', 'javascript'])
+        div(style="height: 1px;")
+
+    if !http.hasContent
+      .description.text-muted This response has no content.
+      div(style="height: 1px;")
+
+mixin Responses(responses)
+  .tabs
     .title
-        strong
-            = title
-            if request.name
-                | &nbsp;&nbsp;
-                code= request.name
-        if collapse && request.hasContent
-            .collapse-button
-                span.close Hide
-                span.open Show
-    +RequestResponseBody(request, collapse)
+      h3 Response
+    span.example-names
+      each response in responses
+        span.tab-button= response.name
+    each response in responses
+      .tab
+        +RequestResponseBody(response, false, true)
 
-mixin RequestResponseBody(request, collapse, showBlank)
-    if request.hasContent || showBlank
-        div(class=collapse ? 'collapse-content' : ''): .inner
-            if request.description
-                .description!= self.markdown(request.description)
 
-            if Object.keys(request.headers).length
-                h5 Headers
-                pre: code
-                    each item, index in request.headers
-                        != self.highlight(item.name + ': ' + item.value, 'http')
-                        if index < request.headers.length - 1
-                          br
-                div(style="height: 1px;")
+mixin Requests(requests)
+  each request in requests
+    .tab
+      +RequestResponseBody(request, false, true)
 
-            if request.body
-                h5 Body
-                pre: code
-                    != self.highlight(request.body, null, ['json', 'yaml', 'xml', 'javascript'])
-                div(style="height: 1px;")
+mixin Examples(action)
+  .action-example
+    .title
+      a.action-example-toggle(href="#") Examples
+    .action-wrap
+      if action.hasRequest
+        .title
+          h3 Request
+        .tabs
+          each example in action.examples
+            +Requests(example.requests)
 
-            if !request.hasContent
-                .description.text-muted This response has no content.
-                div(style="height: 1px;")
+      each example in action.examples
+        +Responses(example.responses)
 
-mixin Examples(resourceGroup, resource, action)
-    each example in action.examples
-        each request in example.requests
-            +RequestResponse('Request', request, true)
-        each response in example.responses
-            +RequestResponse('Response', response, true)
+mixin Action(action)
+  if action.description
+    != self.markdown(action.description)
 
-mixin Content()
-    //- Page header and API description
-    header
-        h1#top!= self.api.name || 'API Documentation'
+  //- A list of sub-sections for parameters, requests
+  //- and responses.
+  if action.parameters.length
+    +Parameters(action.parameters)
 
-    if self.api.descriptionHtml
-        != self.api.descriptionHtml
+  if action.requestAttributes.length
+    .parameter
+      .title
+        strong Request Attributes
+      .parameter__content
+        dl.inner
+          each attribute in action.requestAttributes
+            +Property(attribute)
 
-    //- Loop through and display information about all the resource
-    //- groups, resources, and actions.
-    each resourceGroup in self.api.resourceGroups || []
-        section.resource-group(id=resourceGroup.elementId)
-            h2.group-heading
-                != resourceGroup.name || 'Resource Group!!!'
-                = " "
-                a.permalink(href=resourceGroup.elementLink) &para;
-            if resourceGroup.descriptionHtml
-                != resourceGroup.descriptionHtml
+  if action.responseAttributes.length
+    .parameter
+      .title
+        strong Response Attributes
+      .parameter__content
+        dl.inner
+          each attribute in action.responseAttributes
+            +Property(attribute)
 
-            each resource in resourceGroup.resources || []
-                .resource(id=resource.elementId)
-                    h3.resource-heading
-                        != resource.name || ((resource.actions[0] != null) && resource.actions[0].name) || 'Resource'
-                        = " "
-                        a.permalink(href=resource.elementLink) &nbsp;&para;
-                    if resource.description
-                        != self.markdown(resource.description)
+mixin Property(property)
+  .dl-row
+    .dl-row__content
+      dt
+        .parameter-name= property.name
+        if property.required
+          .parameter-meta= property.type + ' (required)'
+        else
+          .parameter-meta= property.type + ' (optional)'
+      dd
+        if property.description
+          p!= self.markdown(property.description)
+        else
+          p
 
-                    each action in resource.actions || []
-
-                        h1 'ABC'
-
-                        .action(class=action.methodLower, id=action.elementId)
-                            h4.action-heading
-                                .name!= action.name
-                                a.method(class=action.methodLower, href=action.elementLink)
-                                    = action.method
-                                code.uri= self.urldec(action.uriTemplate)
-                            if action.description
-                                != self.markdown(action.description)
-
-                            h4 Example URI
-                            .definition
-                                span.method(class=action.methodLower)= action.method
-                                | &nbsp;
-                                span.uri
-                                  span.hostname= self.api.host
-                                  != action.colorizedUriTemplate
-
-                            //- A list of sub-sections for parameters, requests
-                            //- and responses.
-                            if action.parameters.length
-                                +Parameters(action.parameters)
-                            if action.examples
-                                +Examples(resourceGroup, resource, action)
-
-                            if action.requestAttributes
-                              each attribute in action.requestAttributes || []
-                                h1= attribute.type
+  if property.properties.length
+    .parameter.nested
+      .title
+        .collapse-button
+          span.close Hide child attributes
+          span.open Show child attributes
+      .collapse-content
+        .dl-inner
+          each inner in property.properties
+            +Property(inner)

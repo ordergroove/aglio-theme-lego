@@ -544,7 +544,10 @@ nav {
     color: @text-color;
     border: 1px solid @tabs-border-color;
     padding: @padding / 2;
-    margin-left: @padding;
+
+    &:not(:first-child) {
+        margin-left: @padding;
+    }
 
     &.active {
       background-color: @tabs-active-background-color;

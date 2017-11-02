@@ -188,35 +188,42 @@ function init() {
         // Show all by default
         toggleCollapseNav({target: navItems[i].children[0]});
     }
+
+    $('.action-example').each(function() {
+      var content = $('.action-wrap', this).addClass('hidden');
+      var toggle = $('.action-example-toggle', this).click(function() {
+        content.toggleClass('hidden');
+      });
+    })
 }
 
 // Initial call to set up buttons
 init();
 
-function createCookie(name,value,days) {
-    var expires = "";
-    if (days) {
-        var date = new Date();
-        date.setTime(date.getTime() + (days*24*60*60*1000));
-        expires = "; expires=" + date.toUTCString();
-    }
-    document.cookie = name + "=" + value + expires + "; path=/";
-}
+// function createCookie(name,value,days) {
+//     var expires = "";
+//     if (days) {
+//         var date = new Date();
+//         date.setTime(date.getTime() + (days*24*60*60*1000));
+//         expires = "; expires=" + date.toUTCString();
+//     }
+//     document.cookie = name + "=" + value + expires + "; path=/";
+// }
 
-function readCookie(name) {
-    var nameEQ = name + "=";
-    var ca = document.cookie.split(';');
-    for(var i=0;i < ca.length;i++) {
-        var c = ca[i];
-        while (c.charAt(0)==' ') c = c.substring(1,c.length);
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-    }
-    return null;
-}
+// function readCookie(name) {
+//     var nameEQ = name + "=";
+//     var ca = document.cookie.split(';');
+//     for(var i=0;i < ca.length;i++) {
+//         var c = ca[i];
+//         while (c.charAt(0)==' ') c = c.substring(1,c.length);
+//         if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+//     }
+//     return null;
+// }
 
-function eraseCookie(name) {
-    createCookie(name,"",-1);
-}
+// function eraseCookie(name) {
+//     createCookie(name,"",-1);
+// }
 
 
 // function checkLaunchSurveyIntercept(){
