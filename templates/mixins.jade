@@ -120,7 +120,66 @@ mixin Examples(resourceGroup, resource, action)
         each response in example.responses
             +RequestResponse('Response', response, true)
 
-                        
+mixin Content()
+    //- Page header and API description
+    header
+        h1#top!= self.api.name || 'API Documentation'
+
+    if self.api.descriptionHtml
+        != self.api.descriptionHtml
+
+    //- Loop through and display information about all the resource
+    //- groups, resources, and actions.
+    each resourceGroup in self.api.resourceGroups || []
+        section.resource-group(id=resourceGroup.elementId)
+            h2.group-heading
+                != resourceGroup.name || 'Resource Group!!!'
+                = " "
+                a.permalink(href=resourceGroup.elementLink) &para;
+            if resourceGroup.descriptionHtml
+                != resourceGroup.descriptionHtml
+
+            each resource in resourceGroup.resources || []
+                .resource(id=resource.elementId)
+                    h3.resource-heading
+                        != resource.name || ((resource.actions[0] != null) && resource.actions[0].name) || 'Resource'
+                        = " "
+                        a.permalink(href=resource.elementLink) &nbsp;&para;
+                    if resource.description
+                        != self.markdown(resource.description)
+
+                    each action in resource.actions || []
+
+                        h1 'ABC'
+
+                        .action(class=action.methodLower, id=action.elementId)
+                            h4.action-heading
+                                .name!= action.name
+                                a.method(class=action.methodLower, href=action.elementLink)
+                                    = action.method
+                                code.uri= self.urldec(action.uriTemplate)
+                            if action.description
+                                != self.markdown(action.description)
+
+                            h4 Example URI
+                            .definition
+                                span.method(class=action.methodLower)= action.method
+                                | &nbsp;
+                                span.uri
+                                  span.hostname= self.api.host
+                                  != action.colorizedUriTemplate
+
+                            //- A list of sub-sections for parameters, requests
+                            //- and responses.
+                            if action.parameters.length
+                                +Parameters(action.parameters)
+                            if action.examples
+                                +Examples(resourceGroup, resource, action)
+
+                            if action.requestAttributes
+                              each attribute in action.requestAttributes || []
+                                h1= attribute.type
+
 mixin ContentTriple()
     .right
         h5 API Endpoint
@@ -143,7 +202,7 @@ mixin ContentTriple()
                     if resource.description
                         != self.markdown(resource.description)
 
-            each action in resource.actions || []            
+            each action in resource.actions || []
                 .action-wrap
                   if action.examples
                       .right
@@ -154,7 +213,7 @@ mixin ContentTriple()
                               span.hostname= ''
                               != action.getResourceHost
                               != action.colorizedUriTemplate
-                              
+
                         .tabs
                             if action.hasRequest
                                 .example-names
@@ -200,7 +259,7 @@ mixin ContentTriple()
 
                           //- div
                           //-   - console.log(action)
-                                                      
+
                           if action.requestAttributes.length
                             .parameter
                               .title
@@ -219,11 +278,11 @@ mixin ContentTriple()
                                         dd
                                           if attribute.description
                                             p!= self.markdown(attribute.description)
-                                          else 
+                                          else
                                             p
-                                           
+
                                       // this is ugly - should loop through paramaters till no more found
-                                      // auto alternatme sytles of indented content 
+                                      // auto alternatme sytles of indented content
                                       if attribute.properties.length
                                         .parameter.nested
                                           .title
@@ -239,7 +298,7 @@ mixin ContentTriple()
                                                     dd
                                                       if property.description
                                                         p!= self.markdown(property.description)
-                                                      else 
+                                                      else
                                                         p
                                                   if property.properties.length
                                                     .parameter.nested
@@ -256,10 +315,10 @@ mixin ContentTriple()
                                                               dd
                                                                 if property_sub2.description
                                                                   p!= self.markdown(property_sub2.description)
-                                                                else 
+                                                                else
                                                                   p
                                                           if property_sub2.properties.length
-                                                        
+
                                                             .title
                                                               each property_sub3 in property_sub2.properties || []
                                                                 .dl-row
@@ -273,12 +332,12 @@ mixin ContentTriple()
                                                                     dd
                                                                       if property_sub3.description
                                                                         p!= self.markdown(property_sub3.description)
-                                                                      else 
+                                                                      else
                                                                         p
 
 
-                                        
-  
+
+
                           if action.responseAttributes.length
                             .parameter
                               .title
@@ -294,9 +353,9 @@ mixin ContentTriple()
                                         dd
                                           if attribute.description
                                             p!= self.markdown(attribute.description)
-                                          else 
+                                          else
                                             p
-                                            
+
                                       if attribute.properties.length
                                         .parameter.nested
                                           .title
@@ -314,5 +373,5 @@ mixin ContentTriple()
                                                     dd
                                                       if property.description
                                                         p!= self.markdown(property.description)
-                                                      else 
+                                                      else
                                                         p

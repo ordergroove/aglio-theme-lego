@@ -1,44 +1,11 @@
 {
-  "_args": [
-    [
-      "aglio-theme-lego",
-      ""
-    ]
-  ],
-  "_from": "aglio-theme-lego@latest",
-  "_inCache": true,
-  "_installable": true,
-  "_location": "/aglio-theme-lego",
-  "_nodeVersion": "0.12.7",
-  "_npmOperationalInternal": {
-    "host": "packages-6-west.internal.npmjs.com",
-    "tmp": "tmp/aglio-theme-lego-1.4.5.tgz_1454537721182_0.37704811547882855"
-  },
-  "_npmUser": {
-    "email": "michael.bifolco@ordergroove.com",
-    "name": "mbifolco"
-  },
-  "_npmVersion": "2.11.3",
-  "_phantomChildren": {},
-  "_requested": {
-    "name": "aglio-theme-lego",
-    "raw": "aglio-theme-lego",
-    "rawSpec": "",
-    "scope": null,
-    "spec": "latest",
-    "type": "tag"
-  },
-  "_requiredBy": [
-    "#USER"
-  ],
-  "_resolved": "https://registry.npmjs.org/aglio-theme-lego/-/aglio-theme-lego-1.0.0.tgz",
-  "_shasum": "ac4aa37b70bda6d9589518c9a471d144d714e472",
-  "_shrinkwrap": null,
-  "_spec": "aglio-theme-lego",
-  "_where": "",
-  "author": "Michael Bifolco",
-  "bugs": {
-    "url": "https://github.com/ordergroove/aglio-theme-lego/issues"
+  "name": "@ordergroove/aglio-theme-lego",
+  "version": "1.0.0",
+  "description": "Aglio theme forked froma attributable and maplet",
+  "main": "lib/main.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
   },
   "dependencies": {
     "coffee-script": "^1.8.0",
@@ -53,32 +20,11 @@
     "moment": "^2.8.4",
     "stylus": "^0.51.1"
   },
-  "description": "Aglio theme forked froma attributable and maplet",
   "devDependencies": {
     "mocha": "^2.1.0"
   },
-  "directories": {
-    "test": "test"
-  },
-  "homepage": "https://github.com/ordergroove/aglio-theme-lego",
-  "keywords": [
-    "algio",
-    "theme",
-    "api",
-    "blueprint"
-  ],
-  "license": "MIT",
-  "main": "lib/main.js",
-  "maintainers": [
-    "thedelchop <michael.bifolco@ordergroove.com>"
-  ],
-  "name": "aglio-theme-lego",
-  "optionalDependencies": {},
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ordergroove/aglio-theme-lego.git"
-  },
   "scripts": {
+    "test": "mocha --compilers coffee:coffee-script/register",
     "build": "coffee -o lib -c src",
     "coverage": "istanbul cover -x cache/*.js _mocha -- --compilers coffee:coffee-script/register -R spec",
     "coveralls": "coveralls <coverage/lcov.info",
@@ -86,8 +32,25 @@
     "precoverage": "npm run build",
     "precoveralls": "npm run coverage",
     "prepublish": "npm run build",
-    "pretest": "npm run build",
-    "test": "mocha --compilers coffee:coffee-script/register"
+    "pretest": "npm run build"
   },
-  "version": "1.1.1"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ordergroove/aglio-theme-lego.git"
+  },
+  "keywords": [
+    "aglio",
+    "theme",
+    "api",
+    "blueprint"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ordergroove/aglio-theme-lego/issues"
+  },
+  "homepage": "https://github.com/ordergroove/aglio-theme-lego#readme",
+  "maintainers": [
+    "thedelchop <michael.bifolco@ordergroove.com>"
+  ]
 }
