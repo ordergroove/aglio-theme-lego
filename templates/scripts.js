@@ -219,30 +219,30 @@ function eraseCookie(name) {
 }
 
 
-function checkLaunchSurveyIntercept(){
-    var dont_intercept = readCookie("og_dont_intercept");
-    if (dont_intercept != 1) {
-        // launch modal after 1 minute        
-        setTimeout(function(){
-            var right_panel_width = $('#right-panel-background').width();
-            // set modal width to 80% of right most panel
-            var intercept_width = parseInt(right_panel_width * .8);
-            // center in panel making up for scrollbar and margins
-            var intercept_margin = right_panel_width - ((right_panel_width -  intercept_width)/2) + 25;
-            
-            var survey_intercept = "<div id='survey_intercept' " +
-                "style='width:" + intercept_width + "px;margin-left:-" + intercept_margin + "px;'>" +
-                "<div id='survey_intercept_close_div'>" +
-                "<a href='#' id='survey_intercept_close' class='modal_link'>close</a>"+
-                "</div>" +
-                "Thanks for checking out our new API documentation! We would love your feedback. Help us improve by taking this 2 minute " +
-                "<a href='http://sgiz.mobi/s3/API-Documentation' id='survey_link' class='modal_link' target='_blank' id='og_survey'>survey</a>." +
-                "</div>";
-            $('body').prepend(survey_intercept);
-            $('#survey_intercept').fadeIn();
-        }, 60000)
-    }
-}
+// function checkLaunchSurveyIntercept(){
+//     var dont_intercept = readCookie("og_dont_intercept");
+//     if (dont_intercept != 1) {
+//         // launch modal after 1 minute
+//         setTimeout(function(){
+//             var right_panel_width = $('#right-panel-background').width();
+//             // set modal width to 80% of right most panel
+//             var intercept_width = parseInt(right_panel_width * .8);
+//             // center in panel making up for scrollbar and margins
+//             var intercept_margin = right_panel_width - ((right_panel_width -  intercept_width)/2) + 25;
+
+//             var survey_intercept = "<div id='survey_intercept' " +
+//                 "style='width:" + intercept_width + "px;margin-left:-" + intercept_margin + "px;'>" +
+//                 "<div id='survey_intercept_close_div'>" +
+//                 "<a href='#' id='survey_intercept_close' class='modal_link'>close</a>"+
+//                 "</div>" +
+//                 "Thanks for checking out our new API documentation! We would love your feedback. Help us improve by taking this 2 minute " +
+//                 "<a href='http://sgiz.mobi/s3/API-Documentation' id='survey_link' class='modal_link' target='_blank' id='og_survey'>survey</a>." +
+//                 "</div>";
+//             $('body').prepend(survey_intercept);
+//             $('#survey_intercept').fadeIn();
+//         }, 60000)
+//     }
+// }
 
 window.onload = function () {
     autoCollapse();
@@ -251,15 +251,15 @@ window.onload = function () {
 };
 
 
-$( document ).ready(function() {
-    checkLaunchSurveyIntercept(); 
-    // close survey intercept modal
-    $('body').on('click', '#survey_intercept_close', function(){
-       $('#survey_intercept').fadeOut(); 
-    }) 
-    // if they click the suvey link don't intercept again
-    $('body').on('click', '#survey_link', function(){
-       createCookie("og_dont_intercept",1,365)
-       $('#survey_intercept').fadeOut();    
-    })
-});
+// $( document ).ready(function() {
+//     checkLaunchSurveyIntercept();
+//     // close survey intercept modal
+//     $('body').on('click', '#survey_intercept_close', function(){
+//        $('#survey_intercept').fadeOut();
+//     })
+//     // if they click the suvey link don't intercept again
+//     $('body').on('click', '#survey_link', function(){
+//        createCookie("og_dont_intercept",1,365)
+//        $('#survey_intercept').fadeOut();
+//     })
+// });
