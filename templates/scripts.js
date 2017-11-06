@@ -189,10 +189,11 @@ function init() {
         toggleCollapseNav({target: navItems[i].children[0]});
     }
 
-    $('.action-example').each(function() {
+    $('.action').each(function() {
       var content = $('.action-wrap', this).addClass('hidden');
       var toggle = $('.action-example-toggle', this).click(function() {
         content.toggleClass('hidden');
+        $('.fa', this).toggleClass('fa-chevron-down fa-chevron-up')
       });
     })
 }

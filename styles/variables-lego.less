@@ -1,10 +1,6 @@
 @nav-background-color: #f8f9fa;
 @right-panel-width: 0;
 
-.hidden {
-  display: none !important;
-}
-
 body {
   margin: 0px !important;
 }
@@ -50,11 +46,6 @@ body {
   }
 }
 
-.action-wrap {
-  border: none;
-}
-
-
 .resource-heading {
   font-size: 28px !important;
 }
@@ -68,3 +59,30 @@ body {
 .modal_link:hover {
   color:#686868
 };
+
+.action-example-toggle {
+  &.collpase:after {
+    content: '';
+
+  }
+
+  &:after {
+
+  }
+}
+
+.action-wrap {
+  height: auto;
+  border: none;
+  opacity: 1;
+
+  -webkit-transition: all 0.5s ease-out;
+  transition: all 0.5s ease-out;
+
+  &.hidden {
+    height: 0;
+    opacity: 0;
+    overflow: hidden;
+  }
+}
+

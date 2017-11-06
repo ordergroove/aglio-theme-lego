@@ -39,10 +39,11 @@ body.preload
                 h4.action-heading-name= action.name
                 .action(class=action.methodLower)
                   h4.action-heading
-                    .name!= action.name
-                    a.method(class=action.methodLower, href=action.elementLink)
-                      = action.method
-                    code.uri= self.urldec(action.uriTemplate)
+                    .description
+                      a.method(class=action.methodLower, href=action.elementLink)
+                        = action.method
+                      code.uri= self.urldec(action.uriTemplate)
+                    +ExamplesToggle(action)
 
                   if action.examples
                     +Examples(action)

@@ -26,7 +26,7 @@ mixin Nav()
             .resource-group
                 .heading
                   .chevron
-                    i.open.fa.fa-angle-down
+                    i.open.fa.fa-chevron-down
                   a(href='#top') Getting started
                 .collapse-content
                   ul: each item in self.api.navItems
@@ -36,7 +36,7 @@ mixin Nav()
             .resource-group
                 .heading
                   .chevron
-                    i.open.fa.fa-angle-down
+                    i.open.fa.fa-chevron-down
                   a(href=resourceGroup.elementLink)!= resourceGroup.name || 'API resources'
                 .collapse-content
                   ul
@@ -130,20 +130,22 @@ mixin Requests(requests)
     .tab
       +RequestResponseBody(request, false, true)
 
-mixin Examples(action)
-  .action-example
-    .title
-      a.action-example-toggle(href="#") Examples
-    .action-wrap
-      if action.hasRequest
-        .title
-          h3 Request
-        .tabs
-          each example in action.examples
-            +Requests(example.requests)
+mixin ExamplesToggle(action)
+  a.method.action-example-toggle(class=action.methodLower href="#").
+    Examples
+    #[i.fa.fa-chevron-down]
 
-      each example in action.examples
-        +Responses(example.responses)
+mixin Examples(action)
+  .action-wrap
+    if action.hasRequest
+      .title
+        h3 Request
+      .tabs
+        each example in action.examples
+          +Requests(example.requests)
+
+    each example in action.examples
+      +Responses(example.responses)
 
 mixin Action(action)
   if action.description
