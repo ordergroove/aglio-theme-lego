@@ -193,6 +193,7 @@ function init() {
       var content = $('.action-wrap', this).addClass('hidden');
       var toggle = $('.action-example-toggle', this).click(function() {
         content.toggleClass('hidden');
+        $(this).toggleClass('collpase');
         $('.fa', this).toggleClass('fa-chevron-down fa-chevron-up')
       });
     })

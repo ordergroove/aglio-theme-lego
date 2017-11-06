@@ -60,14 +60,16 @@ body {
   color:#686868
 };
 
+.animation(@length: 0.75s) {
+  -webkit-transition: all @length ease-out;
+  transition: all @length ease-out;
+}
+
 .action-example-toggle {
-  &.collpase:after {
-    content: '';
+  .animation();
 
-  }
-
-  &:after {
-
+  &.collpase {
+    opacity: 1;
   }
 }
 
@@ -76,8 +78,7 @@ body {
   border: none;
   opacity: 1;
 
-  -webkit-transition: all 0.5s ease-out;
-  transition: all 0.5s ease-out;
+  .animation();
 
   &.hidden {
     height: 0;
