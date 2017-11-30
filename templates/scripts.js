@@ -39,30 +39,6 @@ function getWindowDimensions() {
   return [x, y];
 }
 
-/*
-  Collapse or show a request/response example.
-*/
-function toggleCollapseButton(event) {
-    var button = event.target.parentNode;
-    var content = button.parentNode.nextSibling;
-    var inner = content.children[0];
-
-    if (button.className.indexOf('collapse-button') === -1) {
-      // Clicked without hitting the right element?
-      return;
-    }
-
-    if (content.style.maxHeight && content.style.maxHeight !== '0px') {
-        // Currently showing, so let's hide it
-        button.className = 'collapse-button';
-        content.style.maxHeight = '0px';
-    } else {
-        // Currently hidden, so let's show it
-        button.className = 'collapse-button show';
-        content.style.maxHeight = inner.offsetHeight + 12 + 'px';
-    }
-}
-
 function toggleTabButton(event) {
     var i, index;
     var button = event.target;
@@ -157,15 +133,19 @@ function init() {
     var i, j;
 
     // Make collapse buttons clickable
-    var buttons = document.querySelectorAll('.collapse-button');
-    for (i = 0; i < buttons.length; i++) {
-        buttons[i].onclick = toggleCollapseButton;
+    $('.collapse-button').click(function() {
+      var button = $(this).parent();
+      var content = button.next();
 
-        // Show by default? Then toggle now.
-        if (buttons[i].className.indexOf('show') !== -1) {
-            toggleCollapseButton({target: buttons[i].children[0]});
-        }
-    }
+      $(this).toggleClass('show');
+
+      if ($(this).hasClass('show')) {
+        content.css('max-height', 'none');
+      }
+      else {
+        content.css('max-height', 0);
+      }
+    });
 
     var responseCodes = document.querySelectorAll('.example-names');
     for (i = 0; i < responseCodes.length; i++) {
