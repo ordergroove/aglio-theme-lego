@@ -25,31 +25,35 @@ body.preload
         //- Loop through and display information about all the resource
         //- groups, resources, and actions.
         each resourceGroup in self.api.resourceGroups || []
-          .middle
-          each resource in resourceGroup.resources || []
-            .resource(id=resource.elementId)
-              h3.resource-heading
-                != resource.name || ((resource.actions[0] != null) && resource.actions[0].name) || 'Resource'
+          section.resource-group(id=resourceGroup.elementId)
+            h2.group-heading
+                != resourceGroup.name || 'Resource Group!!!'
                 = " "
-                a.permalink(href=resource.elementLink) &para;
-              if resource.description
-                != self.markdown(resource.description)
+                a.permalink(href=resourceGroup.elementLink) &para;
+            if resourceGroup.descriptionHtml
+                != resourceGroup.descriptionHtml
+            .middle
+            each resource in resourceGroup.resources || []
+              .resource(id=resource.elementId)
+                if resource.descriptionHtml
+                  != self.markdown(resource.descriptionHtml)
 
-              each action in resource.actions || []
-                a.anchor(name=action.elementId)
-                h4.action-heading-name= action.name
-                .action(class=action.methodLower)
-                  h4.action-heading
-                    .description
-                      a.method(class=action.methodLower, href=action.elementLink)
-                        = action.method
-                      code.uri= self.urldec(action.uriTemplate)
-                    +ExamplesToggle(action)
+                each action in resource.actions || []
+                  a.anchor(name=action.elementId)
+                  h4.action-heading-name= action.name
+                    a.permalink(href=action.elementLink) &para;
+                  .action(class=action.methodLower)
+                    h4.action-heading
+                      .description
+                        a.method(class=action.methodLower, href=action.elementLink)
+                          = action.method
+                        code.uri= self.urldec(action.uriTemplate)
+                      +ExamplesToggle(action)
 
-                  if action.examples
-                    +Examples(action)
+                    if action.examples
+                      +Examples(action)
 
-                  +Action(action)
+                    +Action(action)
 
 
   script: include scripts.js
