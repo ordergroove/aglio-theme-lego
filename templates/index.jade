@@ -40,7 +40,9 @@ body.preload
 
                 each action in resource.actions || []
                   a.anchor(name=action.elementId)
-                  h4.action-heading-name= action.name
+                  h4.action-heading-name
+                    != action.name
+                    = " "
                     a.permalink(href=action.elementLink) &para;
                   .action(class=action.methodLower)
                     h4.action-heading
